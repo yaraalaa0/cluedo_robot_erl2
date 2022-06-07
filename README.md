@@ -1,5 +1,6 @@
 # cluedo_robot_erl2
 Second assignment of experimental robotics laboratory course, University of Genova, Italy
+
 This is a ROS implementation of a robot agent playing a simplified Cluedo Game with its knowledge represented in OWL ontology. 
 
 The system was implemented and tested on the [docker image](https://hub.docker.com/repository/docker/carms84/exproblab) provided by Prof. Carmine Recchiuto, University of Genova, Italy
