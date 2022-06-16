@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+	
+  <!--arg name="model" default="$(find erl2)/urdf/robot.urdf" /-->
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <!--param name="robot_description" command="$(find xacro)/xacro inorder $(arg model)" /-->
+  
+  <!--param name="robot_description" textfile="$(find erl2)/urdf/robot.urdf" /-->
+  
+  <arg name="gazebo_gui" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="world_name" value="$(find erl2)/world/my_world.world"/>
+  <!--arg name="rviz_config" value="$(find erl2_moveit)/launch/moveit_erl2.rviz"/-->
+  <arg name="rviz_config" value="$(find m2wr_moveit2)/launch/moveit_erl2.rviz"/>
+  
+  
+  <include file="$(find m2wr_moveit2)/launch/demo_gazebo.launch" pass_all_args="true">
+    <!-- robot description is loaded by gazebo.launch, to enable Gazebo features -->
+    <arg name="gazebo_gui" value="$(arg gazebo_gui)" />
+    <arg name="paused" value="$(arg paused)" />
+    <arg name="gazebo_world_name" value="$(arg world_name)"/>
+    <arg name="rviz_config" value="$(arg rviz_config)"/>
+  </include>
+
+  <node name="simulation" pkg ="erl2" type="simulation" output="screen" /> 
+  <node name="go_to_point_action" pkg ="erl2" type="go_to_point_action.py" output="screen" /> 
+  <node name="ontology_server" pkg ="erl2" type="ontology_server.py" output="screen" /> 
+
+</launch>
