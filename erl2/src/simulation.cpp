@@ -1,3 +1,24 @@
+/**
+ * \file simulation.cpp
+ * \brief this file is a simulation of the oracle in the cluedo game
+ * \author Carmine Recchiuto
+ * \version 0.1
+ * \date 30/06/2022
+ *
+ * \details
+ *
+ * Description :
+ *
+ * This node simulates the oracle of the cluedo game
+ * It publishes hints on the topic /oracle_hint whenever the robot's arm end effector link is inside one of the desired areas.
+ * It also implements a service that sends the correct hypothesis ID to the client
+ * It draws the hint areas on rviz using visualization markers
+ * 
+ *
+ *
+*/
+
+
 #include <ros/ros.h>
 #include <gazebo_msgs/LinkStates.h>
 #include <visualization_msgs/MarkerArray.h>
@@ -28,18 +49,48 @@ int winID = -1;
  
 std::vector<erl2::ErlOracle> oracle_msgs;
 
+/**
+ * \brief this function computes the euclidean distance between 2 points in 3D
+ * \param x first point x position
+ * \param y first point y position
+ * \param z first point z position
+ * \param x1 second point x position
+ * \param y1 second point y position
+ * \param z1 second point z position
+ * 
+ *
+ * \return dist the distance between the two points
+ *
+ * The function computes the euclidean distance between two points in 3D
+ * 
+*/
 double distfromtarget (double x, double y, double z, double x1, double y1, double z1){
 	double dist = sqrt((x-x1)*(x-x1)+(y-y1)*(y-y1)+(z-z1)*(z-z1));
 	return dist;
 	
 }
 
+/**
+ * \brief this function returns the correct hypothesis ID as a service response
+ *
+ * \return true
+ *
+ * The function returns the correct hypothesis ID as a service response
+ * 
+*/
 bool oracleService(erl2::Oracle::Request &req, erl2::Oracle::Response &res)
 	{
 		res.ID = winID;
 		return true;
 	}
 
+/**
+ * \brief this is the callback function for the /gazebo/link_states topic
+ *
+ *
+ * The function checks the distance of the cluedo_link from the specific hint points. It it lies within one of the hint areas, it sends a random hint on the topic /oracle_hint
+ * 
+*/
 void oracleCallback(const gazebo_msgs::LinkStates::ConstPtr& msg)
 {
    for(int i=0; i< msg->name.size(); i++){
@@ -99,6 +150,13 @@ void oracleCallback(const gazebo_msgs::LinkStates::ConstPtr& msg)
 	}
 } 
 
+/**
+ * \brief this is main function of the node
+ *
+ * It initializes the node handle and the subscribers, publishers, and services 
+ * It draws the visualization markers of the hint areas on Rviz
+ *
+*/
 int main(int argc, char **argv)
 {
 
