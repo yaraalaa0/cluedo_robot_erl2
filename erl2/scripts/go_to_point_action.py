@@ -1,4 +1,31 @@
 #! /usr/bin/env python
+
+"""
+.. module:: go_to_point_action.py
+   :platform: Unix
+   :synopsis: this file is an implementation of go to point action server node
+   
+.. moduleauthor:: Carmine Recchiuto - Yara Abdelmottaleb
+ 
+This node implements the go to point action server node. 
+When an action request is received with a goal position, it drives the robot towards the goal.
+It drives the robot in three steps:
+- rotating the robot around its z-axis until it is oriented towards the goal point
+- going straight ahead until it reaches the goal point
+- rotating the robot around its z-axis until it is oriented in the goal orientation
+During the three steps, if a cancel request is received through the action server, 
+the goal is aborted and the robot stops.
+ 
+Subscribes to:
+   /odom
+ 
+Publishes to:
+   /cmd_vel
+ 
+Services:
+   /go_to_point_ac
+  
+"""
 # import ros stuff
 import rospy
 #from sensor_msgs.msg import LaserScan
@@ -39,6 +66,16 @@ act_s = None
 
 
 def clbk_odom(msg):
+    """
+    this is the callback function of /odom subscriber
+    This function receives periodically the current odometry of the robot. 
+    It stores the position in the global variable position_
+    It converts the orientation from quaternion to Euler representation and stores the yaw angle in global variable yaw_
+    
+    Args:
+      msg(Odomoetry): the current odometry of the robot received through the topic /odom. 
+      
+    """
     global position_
     global pose_
     global yaw_
@@ -58,18 +95,50 @@ def clbk_odom(msg):
 
 
 def change_state(state):
+    """
+    this is change_state function of the robot
+    This function takes as input the current state value of the robot. 
+    It updates the global variable state_ accordingly with the current new state
+    
+    Args:
+      state(int): the current state value of the robot (0, 1, 2)
+    
+    """
     global state_
     state_ = state
     print ('State changed to [%s]' % state_)
 
 
 def normalize_angle(angle):
+    """
+    This function normalizes the angle to be in the range from -pi to pi
+    This function takes as input an angle expressed in randians. It checks if this angle is in the range of -pi to pi
+    If it is not, the function normalizes the angle to be in the range.
+    
+    Args:
+      angle(float): the requested angle to be normalized
+    
+    Returns:
+      the normalized angle
+     
+    """
     if(math.fabs(angle) > math.pi):
         angle = angle - (2 * math.pi * angle) / (math.fabs(angle))
     return angle
 
 
 def fix_yaw(des_pos):
+    """
+    This function is responsible for orienting the robot's yaw angle towards the goal point
+    This function takes as input the goal point. It calculates the error angle needed to be oriented towards the goal.
+    It, then, publishes angular twist msg to the robot to be rotated around the z-axis. 
+    It checks that the angular velocity msg is in the range between lower and upper bounds.
+    If the error yaw angle to the goal is less than the precision threshold, it changes the state to 1 to indicate finishing the rotation step
+    
+    Args:
+      des_pos(Point): the desired position of the goal
+      
+    """
     global yaw_, pub, yaw_precision_2_, state_
     ## Check at what stage the robot is. Based on that, compute the deired yaw
     if state_ == 0:
@@ -109,6 +178,16 @@ def fix_yaw(des_pos):
 
 
 def go_straight_ahead(des_pos):
+    """
+    This function is responsible for driving the robot straight towards a goal position
+    This function takes as input the desired goal position. It calcualates the error in distance between the current position and the goal.
+    If the distance error is greater than the distance precision threshold, it publishes a Twist msg with a linear velocity to the robot. 
+    When the distance error is less than the threshold, it changes the state to 2 to indicate finishing the go_straight_ahead step
+    
+    Args:
+      des_pos(Point): the desired goal position
+    
+    """
     global yaw_, pub, yaw_precision_, state_
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = desired_yaw - yaw_
@@ -137,6 +216,12 @@ def go_straight_ahead(des_pos):
 
 
 def done():
+    """
+    This function is responsible for stopping the robot
+    This function is responsible for stopping the robot after reaching the goal, or when the goal is cancelled.
+    It publishes a zero velocity msg to the robot to stop it
+    
+    """
     twist_msg = Twist()
     twist_msg.linear.x = 0
     twist_msg.angular.z = 0
@@ -144,7 +229,23 @@ def done():
 
 
 def planning(goal):
-
+    """
+    This is the callback function of /reaching_goal action service
+    This function takes as input the goal request (x, y, theta). It initializes the robot state to 0.
+    Then, it loops until the goal position is reached or it is preempted.
+    In each loop, it does the following:
+    - it checks if a cancel request has been sent. If yes, it cancels the goal, stops the robot, and break from the loop.
+    - it publishes the current robot's position as a feedback of the action service
+    - it checks the current state of the robot and based on each state, it calls the appropriate function to drive the robot towards the goal.
+    - When the goal is reached, it stops the robot and sets the action result
+    
+    Args:
+      goal(Point): the requested goal position
+      
+    Returns:
+      always true
+      
+    """
     global state_, desired_position_
     global act_s
     
@@ -196,6 +297,13 @@ def planning(goal):
 
 
 def main():
+    """
+    This is the main function of the node
+    It initializes the node handle, the publisher to /cmd_vel topic
+    the subscriber to /odom, and the action server of /go_to_point_ac service.
+    It assigns the function execute_action as a callback function to the action server
+    
+    """
     global pub, active_, act_s
     rospy.init_node('go_to_point')
     pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
