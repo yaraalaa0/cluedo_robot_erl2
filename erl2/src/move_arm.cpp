@@ -1,14 +1,47 @@
+/**
+ * \file move_arm.cpp
+ * \brief this file is an implementation of the move arm PDDL action
+ * \author Yara Abdelmottaleb
+ * \version 0.1
+ * \date 30/06/2022
+ *
+ * \details
+ *
+ *
+ * Description :
+ *
+ * This node implements the interface for the PDDL action move arm
+ * It 
+ * 
+ *
+ *
+*/
+
 #include "erl2/move_arm.h"
 #include <unistd.h>
 
 
 
 namespace KCL_rosplan {
-
+        /**
+	 * \brief this is the initialization function of MoveArmInterface class
+	 * This function takes as input the node handle and initiliazes an instance of the class
+	*/
 	MoveArmInterface::MoveArmInterface(ros::NodeHandle &nh) {
 			// here the initialization
 	}
-
+	
+	/**
+	 * \brief this is the callback function for the move arm action interface
+	 * 
+	 * \param msg->parameters[0] defines the current height of the arm (either h1 or h2)
+	 * \param msg->parameters[1] defines the desired height to move the arm to (either h1 or h2)
+	 *
+	 * \return true when the action is complete
+	 *
+	 * This function checks the given desired height and moves the robot arm to this height using moveit
+	 * 
+	*/
 	bool MoveArmInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
 		// here the implementation of the action
 		std::cout << "Moving Arm from " << msg->parameters[0].value << " to " << msg->parameters[1].value << std::endl;
@@ -34,91 +67,18 @@ namespace KCL_rosplan {
 		    }
 		
                 
-		/*
-		moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-		geometry_msgs::Pose pose1;
-		
-		if (msg->parameters[2].value == "wp1"){
-		    pose1.orientation.w = 0.70;
-		    pose1.orientation.x = 0.00;
-		    pose1.orientation.y = 0.00;
-		    pose1.orientation.z = -0.70;
-		    
-		    pose1.position.x =  3.0;
-		    pose1.position.y =  0.00;
-		    }
-		else if (msg->parameters[2].value == "wp2"){
-		    pose1.orientation.w = 0.70;
-		    pose1.orientation.x = 0.00;
-		    pose1.orientation.y = 0.00;
-		    pose1.orientation.z = 0.00;
-		    
-		    pose1.position.x =  0.0;
-		    pose1.position.y =  3.0;
-		    }
-		else if (msg->parameters[2].value == "wp3"){
-		    pose1.orientation.w = 0.70;
-		    pose1.orientation.x = 0.00;
-		    pose1.orientation.y = 0.00;
-		    pose1.orientation.z = 1.4;
-		    
-		    pose1.position.x =  -3.0;
-		    pose1.position.y =  0.00;
-		    }
-		else if (msg->parameters[2].value == "wp4"){
-		    pose1.orientation.w = 0.70;
-		    pose1.orientation.x = 0.00;
-		    pose1.orientation.y = 0.00;
-		    pose1.orientation.z = -1.4;
-		    
-		    pose1.position.x =  0.0;
-		    pose1.position.y =  -3.0;
-		    }
-		if (msg->parameters[1].value == "h1"){
-		    pose1.position.z =  0.75;
-		    }
-		if (msg->parameters[1].value == "h2"){
-		    pose1.position.z =  1.25;
-		    }*/
-		/*
-		group.setStartStateToCurrentState();
-		group.setApproximateJointValueTarget(pose1, "cluedo_link");
-		    
-		std::vector<double> joint_values;
-                double timeout = 0.5;
-                bool found_ik = kinematic_state->setFromIK(joint_model_group, pose1, timeout);
-  
-                // Now, we can print out the IK solution (if found):
-                if (found_ik)
-                {
-                   kinematic_state->copyJointGroupPositions(joint_model_group, joint_values);
-                   for (std::size_t i = 0; i < joint_names.size(); ++i)
-                   {
-                       ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joint_values[i]);
-                   }
-    
-               }
-               else
-               {
-                   ROS_INFO("Did not find IK solution");
-               }
-  
-               group.setJointValueTarget(joint_values);
-               group.setStartStateToCurrentState();
-               group.setGoalOrientationTolerance(0.01);
-               group.setGoalPositionTolerance(0.01);
-
-               // Plan and execute
-                   
-               group.plan(my_plan); 
-               group.execute(my_plan);
-	       */
 	       sleep(5);
 	       ROS_INFO("Action (%s) performed: completed!", msg->name.c_str());
 	       return true;
 	}
 }
 
+        /**
+	 * \brief this is main function of the node
+	 *
+	 * It initializes the node handle and the action interface, 
+	 *
+	*/
 	int main(int argc, char **argv) {
 		ros::init(argc, argv, "MoveArm_rosplan_action", ros::init_options::AnonymousName);
 		ros::NodeHandle nh("~");
