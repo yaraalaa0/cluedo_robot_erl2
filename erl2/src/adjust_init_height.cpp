@@ -24,7 +24,11 @@
 
 
 namespace KCL_rosplan {
-
+        
+	/**
+	 * \brief this is the initialization function of AdjustInitHeightInterface class
+	 * This function takes as input the node handle and initiliazes an instance of the class
+	*/
 	AdjustInitHeightInterface::AdjustInitHeightInterface(ros::NodeHandle &nh) {
 			// here the initialization
 	}
