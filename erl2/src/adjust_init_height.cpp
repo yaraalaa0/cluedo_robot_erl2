@@ -1,20 +1,17 @@
 /**
- * \file position_service.cpp
- * \brief this file is an implementation of the random position server
- * \author Carmine Recchiuto
+ * \file adjust_init_height.cpp
+ * \brief this file is an implementation of the adjust initial height action
+ * \author Yara Abdelmottaleb
  * \version 0.1
- * \date 20/09/2021
+ * \date 30/06/2022
  *
  * \details
  *
- * Services: <BR>
- *    /position_server
- *
  * Description :
  *
- * This node implements the random position server. When the server receives a request of 
- * minimum and maximum numbers, it replies with three random position values for x, y, and 
- * theta between the minimum and maximum limits. 
+ * This node implements the interface for the action adujst initial height
+ * It sets the robot arm to a given height using moveit
+ * 
  *
  *
 */
@@ -33,14 +30,14 @@ namespace KCL_rosplan {
 			// here the initialization
 	}
         /**
-	 * \brief this is the callback function generates a random number within a range
-	 * \param M defines the lower bownd of the range
-	 * \param N defines the upper bound of the range
+	 * \brief this is the callback function for the ajust initial height action interface
+	 * \param msg->parameters[0] defines the desired height to put the arm at (either h1 or h2)
+	 * 
 	 *
-	 * \return random number of type double within the specified range
+	 * \return true when the action is complete
 	 *
-	 * This function takes as inout the min and max limits of the range and uses the rand() 
-	 * function to generate a random number within the range 
+	 * This function takes as input the desired height for the robot arm and calls moveit to set the robot arm at this height
+	 * 
 	*/
 	bool AdjustInitHeightInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
 		// here the implementation of the action
@@ -75,8 +72,8 @@ namespace KCL_rosplan {
         /**
 	 * \brief this is main function of the node
 	 *
-	 * It initializes the node handle and the /position_server service, 
-	 * and assigns myrandom() as a callback function to the service
+	 * It initializes the node handle and the action interface, 
+	 *
 	*/
 	int main(int argc, char **argv) {
 		ros::init(argc, argv, "AdjustInitHeight_rosplan_action", ros::init_options::AnonymousName);
