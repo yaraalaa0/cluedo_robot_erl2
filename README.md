@@ -1,7 +1,7 @@
 # cluedo_robot_erl2
 Second assignment of experimental robotics laboratory course, University of Genova, Italy
 
-This is a ROS implementation of a robot agent playing a simplified Cluedo Game with its knowledge represented in OWL ontology. 
+This is a ROS implementation of a robot agent playing a simplified Cluedo Game. The robot's actions is planned using PDDL and executed using ROSPlan interfaces. The robot's knowledge is represented in OWL ontology that is accessed using ARMOR client.  
 
 The system was implemented and tested on the [docker image](https://hub.docker.com/repository/docker/carms84/exproblab) provided by Prof. Carmine Recchiuto, University of Genova, Italy
 
