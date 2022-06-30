@@ -99,7 +99,7 @@ namespace KCL_rosplan {
 
 /**
  * \brief this is main function of the node
- * It initializes the node handle and the action interface, 
+ * It initializes the node handle, the action interface, and the service clients 
  *
 */
 int main(int argc, char **argv) {
