@@ -1,6 +1,26 @@
+/**
+ * \file position_service.cpp
+ * \brief this file is an implementation of the random position server
+ * \author Carmine Recchiuto
+ * \version 0.1
+ * \date 20/09/2021
+ *
+ * \details
+ *
+ * Services: <BR>
+ *    /position_server
+ *
+ * Description :
+ *
+ * This node implements the random position server. When the server receives a request of 
+ * minimum and maximum numbers, it replies with three random position values for x, y, and 
+ * theta between the minimum and maximum limits. 
+ *
+ *
+*/
+
 #include "erl2/adjust_init_height.h"
 #include <unistd.h>
-
 
 
 namespace KCL_rosplan {
@@ -8,7 +28,16 @@ namespace KCL_rosplan {
 	AdjustInitHeightInterface::AdjustInitHeightInterface(ros::NodeHandle &nh) {
 			// here the initialization
 	}
-
+        /**
+	 * \brief this is the callback function generates a random number within a range
+	 * \param M defines the lower bownd of the range
+	 * \param N defines the upper bound of the range
+	 *
+	 * \return random number of type double within the specified range
+	 *
+	 * This function takes as inout the min and max limits of the range and uses the rand() 
+	 * function to generate a random number within the range 
+	*/
 	bool AdjustInitHeightInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
 		// here the implementation of the action
 		std::cout << "Adjusting Initial Arm Height to " << msg->parameters[0].value << std::endl;
@@ -39,6 +68,12 @@ namespace KCL_rosplan {
 	}
 }
 
+        /**
+	 * \brief this is main function of the node
+	 *
+	 * It initializes the node handle and the /position_server service, 
+	 * and assigns myrandom() as a callback function to the service
+	*/
 	int main(int argc, char **argv) {
 		ros::init(argc, argv, "AdjustInitHeight_rosplan_action", ros::init_options::AnonymousName);
 		ros::NodeHandle nh("~");
