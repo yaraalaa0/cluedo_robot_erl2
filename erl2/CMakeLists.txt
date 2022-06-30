@@ -152,7 +152,6 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
  add_executable(simulation src/simulation.cpp)
- add_executable(erl2_moveit src/erl2_moveit.cpp)
  add_executable(go_to_waypoint src/go_to_waypoint.cpp)
  add_executable(move_arm src/move_arm.cpp)
  add_executable(adjust_init_height src/adjust_init_height.cpp)
@@ -175,14 +174,6 @@ add_dependencies(simulation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTE
    ${catkin_LIBRARIES}
  )
  
- ## Add cmake target dependencies of the executable
-## same as for the library above
-add_dependencies(erl2_moveit ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Specify libraries to link a library or executable target against
- target_link_libraries(erl2_moveit
-   ${catkin_LIBRARIES}
- )
 
 add_dependencies(go_to_waypoint ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
