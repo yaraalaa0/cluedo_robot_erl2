@@ -7,6 +7,19 @@
  *
  * \details
  *
+ * Publishers: <BR>
+ *    /visualization_marker
+ *
+ *    /oracle_hint
+ *
+ *
+ * Subscribers: <BR>
+ *    /gazebo/link_states
+ *
+ * Services: <BR>
+ *    /oracle_solution
+ *
+ *
  * Description :
  *
  * This node simulates the oracle of the cluedo game
