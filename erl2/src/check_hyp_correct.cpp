@@ -1,3 +1,26 @@
+/**
+ * \file check_hyp_correct.cpp
+ * \brief this file is an implementation of the check hypothesis correct PDDL action
+ * \author Yara Abdelmottaleb
+ * \version 0.1
+ * \date 30/06/2022
+ *
+ * \details
+ *
+ * Clients: <BR>
+ *   /check_hyp_complete
+ *  
+ *   /oracle_solution
+ *
+ * Description :
+ *
+ * This node implements the interface for the PDDL action check hypothesis correct
+ * It checks whether the any of the current completed hypotheses in the ontology is the correct hypothesis or not
+ * 
+ *
+ *
+*/
+
 #include "erl2/check_hyp_correct.h"
 #include <unistd.h>
 #include <actionlib/client/simple_action_client.h>
@@ -14,11 +37,24 @@ ros::ServiceClient client_oracle;
 
 
 namespace KCL_rosplan {
-
+        /**
+	 * \brief this is the initialization function of CheckHypCorrectInterface class
+	 * This function takes as input the node handle and initiliazes an instance of the class
+	*/
 	CheckHypCorrectInterface::CheckHypCorrectInterface(ros::NodeHandle &nh) {
 	    // here the initialization
 	}
-
+        
+	/**
+	 * \brief this is the callback function for the check hypothesis correct action interface
+	 * 
+	 *
+	 * \return true if there is a correct hypothesis or false otherwise
+	 *
+	 * This function gets the list of completed hypotheses by calling the service /check_hyp_complete and then it gets the correct hypothesis ID by calling the service /oracle_solution 
+	 * It loops over the list of completed hypotheses to check if any of them is the correct hypothesis
+	 * 
+	*/
 	bool CheckHypCorrectInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
 		// here the implementation of the action
 		
@@ -61,6 +97,11 @@ namespace KCL_rosplan {
 	}
 }
 
+/**
+ * \brief this is main function of the node
+ * It initializes the node handle and the action interface, 
+ *
+*/
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "CheckHypCorrect_rosplan_action", ros::init_options::AnonymousName);
 	ros::NodeHandle nh("~");
