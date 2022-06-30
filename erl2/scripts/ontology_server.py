@@ -1,3 +1,19 @@
+"""
+.. module:: ontology_server.py
+   :platform: Unix
+   :synopsis: this file is an implementation of the ontology server node
+   
+.. moduleauthor:: Yara Abdelmottaleb
+ 
+This node implements the ontology server node. 
+It accesses the ontology through ARMOR client. When add_hint service request is received, it adds it to the ontology.
+When check_complete service request is received, it responds with the list of complete hypotheses in the ontology.
+ 
+Services:
+   /add_hint
+   /check_hyp_complete
+  
+"""
 import roslib
 import rospy
 from armor_api.armor_client import ArmorClient
@@ -9,6 +25,14 @@ ontology_IRI = "http://www.emarolab.it/cluedo-ontology"
 
 
 def add_hint(req):
+    """
+    This is the add_hint service function
+    It receives a hint and adds it to the ontology
+    
+    Args:
+      req(Hint): the hint request
+    
+    """
     global armor_client
     print("Ontology SERVER Received Request")
     #get the list of current complete hypotheses
@@ -42,6 +66,16 @@ def add_hint(req):
     
 
 def check_complete(req):
+    """
+    This is the check_hyp_complete service function 
+    
+    Args:
+      req: empty request
+    
+    Returns:
+      the list of complete hypotheses IDs
+     
+    """
     global armor_client
     #get the list of current complete hypotheses
     complete_hyp_links = armor_client.query.ind_b2_class("COMPLETED")
@@ -49,13 +83,13 @@ def check_complete(req):
     print("Server Complete Hypotheses:")
     print(complete_hyp)
     return HypCompCheckResponse(complete_hyp)
-    '''
-    if len(complete_hyp) == 0:
-        return False
-    else:
-        return True
-    '''
+    
 def main():
+    """
+    This is the main function of the node
+    It initializes the node handle, the armor client, and the services /add_hint and /check_hyp_complete
+    
+    """
     global armor_client
     
     rospy.init_node('ontology_server')
