@@ -59,7 +59,7 @@ The temporal sequence of the program goes as follows:
 10. if the sent hypothesis ID is not correct, generate a new random integer (not previously selected) from 1 to 10 to be the current hypothesis ID and go to step 1.
 11. if the sent hypothesis ID is correct, end the program.
 
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/cluedo2_seq_diag.jpg?raw=true)
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/cluedo2_seq_diag.jpg?raw=true)
 
 ## Installation and Running Procedures:
 
