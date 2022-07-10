@@ -42,7 +42,7 @@ There are, also, four possible events (state transitions):
 - **false:** indicating that the oracle checked the current hypothesis and found that it is false.
  
 
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/cluedo_state_diag.PNG?raw=true)
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/cluedo2_state_diag.jpg?raw=true)
 
 ## Sequence Diagram:
 The temporal sequence of the program goes as follows:
