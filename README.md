@@ -1,5 +1,5 @@
 # cluedo_robot_erl2
-Second assignment of experimental robotics laboratory course, University of Genova, Italy
+Second assignment of experimental robotics laboratory course, M.Sc. in Robotics Engineering, University of Genova, Italy
 
 This is a ROS implementation of a robot agent playing a simplified Cluedo Game. The robot's actions is planned using PDDL and executed using ROSPlan interfaces. The robot's knowledge is represented in OWL ontology that is accessed using ARMOR client.  
 
