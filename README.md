@@ -141,11 +141,11 @@ rosrun armor execute it.emarolab.armor.ARMORMainService
 ```
 - Launch the simulation, ontology server, and go_to_point action server:
 ```
-roslaunch erl2 assignment.launch`
+roslaunch erl2 assignment.launch
 ```
 - Run the task manager to start the game:
 ```
-rosrun erl2 task_manager.py`
+rosrun erl2 task_manager.py
 ```
 The received hints are displayed on the first terminal. The plan success result is displayed on the fourth terminal.
 
