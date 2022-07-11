@@ -150,31 +150,86 @@ rosrun erl2 task_manager.py
 The received hints are displayed on the first terminal. The plan success result is displayed on the fourth terminal.
 
 ## Result:
-**Following are screenshots of the terminal logs in successive timesteps while running the program:**
+**Following are screenshots of the running simulation in successive timesteps:**
 
-1. The program selects a hypothesis ID and starts with the state GoToRandomRoom. After reaching, transition to LookForHints
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/st1.PNG?raw=true)
+1. The simulation starts, the robot is in initial random pose
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p1.PNG?raw=true)
 
-2. The hint is displayed. The current hypothesis is checked if it is complete or not. It is not complete yet. So, the agent transition to GoToRandomRoom 
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/st2.PNG?raw=true)
+2. First action in the plan `AdjustInitHeight` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p2.PNG?raw=true)
 
-3. The agent goes to a random room and look for hints as before. The hint is displayed and the current hypothesis is checked if it is complete or not. It is not complete yet. So, the agent transition to GoToRandomRoom 
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/st3.PNG?raw=true)
+3. Action `GoToWaypoint(wp0,wp1)` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p3.PNG?raw=true)
 
-4. The agent goes to a random room and look for hints as before. Here, the agent doesn't get any hint from this room. The current hypothesis is checked as before. It is not complete yet. So, the agent transition to GoToRandomRoom 
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/st4.PNG?raw=true)
+4. Action `GetHint` is executed.
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p4.PNG?raw=true)
 
-5. The agent goes to a random room and look for hints. The hint is displayed and the current hypothesis is checked if it is complete or not. Now, it is complete. So, the agent transition to GoToOracle state.
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/st5.PNG?raw=true)
+5. No hints received. So, the task_manager updates the current state and re-plan
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p5.PNG?raw=true)
 
-6. The agent goes to the oracle. After reaching, transition to CheckHypothesis
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/st6.PNG?raw=true)
+6. Action `GoToWaypoint(wp1,wp2)` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p6.PNG?raw=true)
 
-7. The hypothesis is displayed. The result of checking is FALSE. So, new hypothesis ID is selected, and the agent transition to GoToRandomRoom as before.
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/st7.PNG?raw=true)
+7. Action `GetHint` is executed.
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p7.PNG?raw=true)
 
-8. The agent repeates the above steps until the result of checking the hypothesis is CORRECT. In that case, the current ontology is saved and the user is asked to terminate the program.
-![alt text](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/program_images/st8.PNG?raw=true)
+8. No hints received. So, the task_manager updates the current state and re-plan
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+9. Action `GoToWaypoint(wp2,wp3)` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+10. Action `GetHint` is executed.
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+11. No hints received. So, the task_manager updates the current state and re-plan
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+12. Action `GoToWaypoint(wp3,wp4)` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+13. Action `GetHint` is executed. There is a received hint.
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+14. Action `GoToWaypoint(wp4,wp1)` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+15. Action `MoveArm(h1,h2)` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+16. Action `GetHint` is executed. There is a received hint.
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+17. Action `GoToWaypoint(wp1,wp2)` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+18. Action `GetHint` is executed. There is a received hint.
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+19. The robot collected 3 hints. So, it goes to the center point. Action `GoToWaypoint(wp2,wp0)` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+20. Action `CheckHypCorrect` is executed
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+21. When the robot finds the correct hypothesis, the output can be like this:
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
+
+22. Plan is successful
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/tree/main/erl2_images/p8.PNG?raw=true)
+
 
 ## Working Assumptions:
 - The hints are selected randomly from the dictionary stored in the oracle based on the hypothesis ID
