@@ -128,24 +128,26 @@ Download this repository to your workspace. Then, build it
 catkin_make
 ```
 
-Place `cluedo_ontology.owl` file on your desktop (or on any other place, but you need to specify the path inside [state_machine.py](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/cluedo/scripts/state_machine.py))
+Place `cluedo_ontology.owl` file on your desktop (or on any other place, but you need to specify the path inside [ontology_server.py](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2/scripts/ontology_server.py)
 
-To launch the program, run the following commands on different terminal tabs:
+To launch the program, run the following commands in order on four terminal tabs:
+- launch ROSplan with the action interfaces: 
 ```
-roscore
+roslaunch erl2 rosplan_cluedo.launch
 ```
+- Launch ARMOR:
 ```
 rosrun armor execute it.emarolab.armor.ARMORMainService
 ```
+- Launch the simulation, ontology server, and go_to_point action server:
 ```
-roslaunch cluedo cluedo.launch`
+roslaunch erl2 assignment.launch`
 ```
-The robot behaviour is continuously logged on the third terminal.
-
-To display the states:
+- Run the task manager to start the game:
 ```
-rosrun smach_viewer smach_viewer.py
+rosrun erl2 task_manager.py`
 ```
+The received hints are displayed on the first terminal. The plan success result is displayed on the fourth terminal.
 
 ## Result:
 **Following are screenshots of the terminal logs in successive timesteps while running the program:**
