@@ -96,7 +96,7 @@ def main():
     
     # Start ARMOR client and load the cluedo ontology
     armor_client = ArmorClient("client", "reference")
-    armor_client.utils.load_ref_from_file(path + "erl2_cluedo.owl", ontology_IRI,
+    armor_client.utils.load_ref_from_file(path + "cluedo_ontology.owl", ontology_IRI,
                                 True, "PELLET", True, False)  # initializing with buffered manipulation and reasoning
     armor_client.utils.mount_on_ref()
     armor_client.utils.set_log_to_terminal(True)
