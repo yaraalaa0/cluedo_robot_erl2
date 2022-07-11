@@ -153,95 +153,130 @@ The received hints are displayed on the first terminal. The plan success result 
 **Following are screenshots of the running simulation in successive timesteps:**
 
 1. The simulation starts, the robot is in initial random pose
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/initial_pose.PNG?raw=true)
 
 2. First action in the plan `AdjustInitHeight` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a1.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p1.PNG?raw=true)
 
 3. Action `GoToWaypoint(wp0,wp1)` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a2.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p2.PNG?raw=true)
 
 4. Action `GetHint` is executed.
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a3.PNG?raw=true)
 
 5. No hints received. So, the task_manager updates the current state and re-plan
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/re-planning__1.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/re-planning4.PNG?raw=true)
 
 6. Action `GoToWaypoint(wp1,wp2)` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a5.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p3.PNG?raw=true)
 
 7. Action `GetHint` is executed.
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a6.PNG?raw=true)
 
 8. No hints received. So, the task_manager updates the current state and re-plan
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/re-planning__2.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/re-planning7.PNG?raw=true)
 
 9. Action `GoToWaypoint(wp2,wp3)` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a8.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p4.PNG?raw=true)
 
 
 10. Action `GetHint` is executed.
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a9.PNG?raw=true)
 
 
 11. No hints received. So, the task_manager updates the current state and re-plan
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/re-planning__3.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/re-planning10.PNG?raw=true)
 
 12. Action `GoToWaypoint(wp3,wp4)` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a11.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p5.PNG?raw=true)
 
 
 13. Action `GetHint` is executed. There is a received hint.
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a12.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/hint12.PNG?raw=true)
 
 14. Action `GoToWaypoint(wp4,wp1)` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a13.PNG?raw=true)
-![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p6.PNG?raw=true)
 
 
 15. Action `MoveArm(h1,h2)` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a14.PNG?raw=true)
-![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p7.PNG?raw=true)
+
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p6.PNG?raw=true)
 
 
 16. Action `GetHint` is executed. There is a received hint.
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a15.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/hint15.PNG?raw=true)
 
 
 17. Action `GoToWaypoint(wp1,wp2)` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a16.PNG?raw=true)
-![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p8.PNG?raw=true)
+
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p7.PNG?raw=true)
 
 
 18. Action `GetHint` is executed. There is a received hint.
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a17.PNG?raw=true)
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/hint17.PNG?raw=true)
 
 
 19. The robot collected 3 hints. So, it goes to the center point. Action `GoToWaypoint(wp2,wp0)` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a18.PNG?raw=true)
-![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p9.PNG?raw=true)
+
+![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/p8.PNG?raw=true)
 
 
 20. Action `CheckHypCorrect` is executed
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/a19.PNG?raw=true)
 
 
 21. When the robot finds the correct hypothesis, the output can be like this:
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/final20.PNG?raw=true)
 
 
 22. Plan is successful
+
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/final_result.PNG?raw=true)
 
 
