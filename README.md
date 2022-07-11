@@ -54,19 +54,58 @@ There are, also, four possible events (state transitions):
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/cluedo2_state_diag.jpg?raw=true)
 
 ## Sequence Diagram:
-The temporal sequence of the program goes as follows:
+A possible temporal sequence of the program can go as follows:
 
-1. The state machine requests a random room from the map server, and receives the *(x,y)* position
-2. it sends the room coordinates to the motion controller and waits until the robot reaches the target
-3. it sends the current hypothesis ID to the oracle and receives a random hint
-4. it adds the hint to the ontology
-5. it checks if the current hypothesis is complete or not (by querying the members of the `COMPLETE` class in the ontology)
-6. if the current hypothesis is not complete yet, go to step 1
-7. if the current hypothesis is complete, the state machine requests the *(x,y)* position of the oracle from the map server
-8. it sends the oracle coordinates to the motion controller and waits until the robot reaches the target
-9. it sends the current hypothesis ID to the oracle to check if it is correct or not
-10. if the sent hypothesis ID is not correct, generate a new random integer (not previously selected) from 1 to 10 to be the current hypothesis ID and go to step 1.
-11. if the sent hypothesis ID is correct, end the program.
+1. `Task Manager` calls `ROSPlan` for problem generation, planning, and plan execution given the PDDL domain and problem files
+2. `ROSPlan` sends execute command to the `AdjustInitHeight` action interface
+3. `AdjustInitHeight` sends the target arm pose to Moveit
+4. `AdjustInitHeight` returns `True` to `ROSPlan`
+5. `ROSPlan` sends execute command to the `GoToWaypoint` action interface
+6. `GoToWaypoint` sends the corresponding (x,y) position of the named waypoint to `go_to_point` action server.
+7. `go_to_point` drives the robot towards the received goal and sends a response to `GoToWaypoint` after reaching the goal.
+8. `GoToWaypoint` returns `True` to `ROSPlan`
+9. `ROSPlan` sends execute command to the `GetHint` action interface
+10. `GetHint` receives a new hint from `Simulation Oracle`
+11. `GetHint` sends a service request to `Ontology Server` to add the hint to the ontology
+12. `Ontology Server` returns `True` after it adds the hint
+13. `ROSPlan` returns `True` to `ROSPlan`
+14. `ROSPlan` sends execute command to the `MoveArm` action interface
+15. `MoveArm` sends the target arm pose to Moveit
+16. `MoveArm` returns `True` to `ROSPlan`
+17. `ROSPlan` sends execute command to the `GetHint` action interface
+18. `GetHint` doesn't receive any hint. So, it returns `False` to `ROSPlan`
+19. `ROSPlan` returns goal success = `False` to `Task Manager`
+20. `Task Manager` checks the last dispatched action before failure and updates the current state to `ROSPlan`
+21. `Task Manager` calls `ROSPlan` for re-planning and execution
+22.  `ROSPlan` sends execute command to the `GoToWaypoint` action interface
+23.  `GoToWaypoint` sends the corresponding (x,y) position of the named waypoint to `go_to_point` action server.
+24. `go_to_point` drives the robot towards the received goal and sends a response to `GoToWaypoint` after reaching the goal.
+25. `GoToWaypoint` returns `True` to `ROSPlan`
+26. `ROSPlan` sends execute command to the `GetHint` action interface
+27. `GetHint` receives a new hint from `Simulation Oracle`
+28. `GetHint` sends a service request to `Ontology Server` to add the hint to the ontology
+29. `Ontology Server` returns `True` after it adds the hint
+30. `GetHint` returns `True` to `ROSPlan`
+31. `ROSPlan` sends execute command to the `MoveArm` action interface
+32. `MoveArm` sends the target arm pose to Moveit
+33. `MoveArm` returns `True` to `ROSPlan`
+34. `ROSPlan` sends execute command to the `GetHint` action interface
+35. `GetHint` receives a new hint from `Simulation Oracle`
+36. `GetHint` sends a service request to `Ontology Server` to add the hint to the ontology
+37. `Ontology Server` returns `True` after it adds the hint
+38. `GetHint` returns `True` to `ROSPlan`
+39. `ROSPlan` sends execute command to the `GoToWaypoint` action interface to go to the center point
+40. `GoToWaypoint` sends the corresponding (0,0) position of `wp0` to `go_to_point` action server.
+41. `go_to_point` drives the robot towards the received goal and sends a response to `GoToWaypoint` after reaching the goal.
+42. `GoToWaypoint` returns `True` to `ROSPlan`
+43. `ROSPlan` sends execute command to the `CheckHypCorrect` action interface
+44. `CheckHypCorrect` sends a service request to `Ontology Server` to get the list of collected complete hypotheses IDs in the ontology
+45. `Ontology Server` replies with the list of IDs of collected complete hypotheses
+46. `CheckHypCorrect` sends a service request to `Simulation Oracle` to get the ID of the correct hypothesis
+47. `Simulation Oracle` replies with the ID of the correct hypothesis
+48. `CheckHypCorrect` checks if one of the completed hypotheses is the correct one
+49. If yes, `CheckHypCorrect` returns `True` to `ROSPlan`
+50. `ROSPlan` returns goal success = `True` to `Task Manager`
 
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/cluedo2_seq_diag.jpg?raw=true)
 
