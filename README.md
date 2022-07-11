@@ -39,16 +39,16 @@ The software architecture of the system is composed of 13 main components:
 ## State Diagram:
 
 The agent has four possible states:
-- **GoToRandomRoom:** the robot is going to a random room for exploration
-- **LookForHints:** the robot is looking for hints in the place it is currently in
-- **GoToOracle:** the robot is going to the oracle place
-- **CheckHypothesis:** the robot is checking whether its current collected hypothesis is true or not
+- **GoingToRandomPlace:** the robot is going to a random waypoint for exploration
+- **GettingHints:** the robot is checking for hints in the place it is currently in
+- **GoingToCenter:** the robot is going to the center waypoint
+- **CheckingHypothesis:** the robot is checking whether one of its current collected hypotheses is the correct one
 
 There are, also, four possible events (state transitions):
-- **reached:** indicating an event that the robot reached its target position
-- **hyp_non_comp:** indicating an event that the robot checked the current hypothesis and found that it is not complete yet
-- **hyp_comp:** indicating an event that the robot checked the current hypothesis and found that it is complete
-- **false:** indicating that the oracle checked the current hypothesis and found that it is false.
+- **reached:** indicating that the robot reached its target position
+- **got a hint:** indicating that the robot received a hint (whether it is valid or not)
+- **collected 3 hints:** indicating that the robot collected 3 hints
+- **hyp_non_correct:** indicating that the robot checked the current hypotheses and none of them was correct.
  
 
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/cluedo2_state_diag.jpg?raw=true)
