@@ -280,18 +280,12 @@ The received hints are displayed on the first terminal. The plan success result 
 ![alt text](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2_images/final_result.PNG?raw=true)
 
 
-## Working Assumptions (System Limitations):
-- The hints are selected randomly from the dictionary stored in the oracle based on the hypothesis ID
-- In the dictionary of hints stored in the oracle, each hypothesis has four hints. Three are of the types: *(who,PERSON)*, *(what,WEAPON)*, *(where,PLACE)*. The fourth one is the empty hint.
-- The robot can get one hint at a time from the same room. Obviously, this hint can be empty. 
-- The hint obtained at each room doesn't have to be related to the type of room itself. For example, the agent can receive a hint (where, bathroom) in the kitchen.
-- Whenever a hint is sent to the robot, it is deleted from the dictionary in order not to be sent again. 
-  > This is only true for the three types of hints. The empty hint can be sent multiple times.
-- The robot only goes to the oracle when the current hypothesis is `COMPLETE`
-- The new current hypothesis ID is selected randomly from the list of possible hypothesis IDs. 
-- The list of possible hypothesis IDs range from 1 to 10 and they can be modified in the beginning of [state_machine.py](https://github.com/yaraalaa0/ExpRob_CluedoGame/blob/main/cluedo/scripts/state_machine.py) The correct hypothesis ID is a number within this range.
-- Whenever an ID is selected, it cannot be selected again.
-- The environment map of obstacles is stored in the motion controller action server for path planning purposes
+## Working Assumptions:
+- 
+
+
+## System's Limitations:
+- 
 
 ## Possible Improvements:
 - Allow a hypothesis not to necessarily contain all three types of hints. It can contain only one or two types. It can be inconsistent.
