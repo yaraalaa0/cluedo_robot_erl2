@@ -283,7 +283,7 @@ The received hints are displayed on the first terminal. The plan success result 
 ## System Features & Working Assumptions:
 - There are four possible (x,y) locations for receiving hints and they are: (3,0), (0,3), (-3,0), (0,-3).
 - When collecting hints, the robot doesn't stand exactly at the previously defined locations. However, it stands at the locations: (2.4,0), (0,2.4), (-2.4,0), (0,-2.4) respectively. This is to give space to the robot's arm to reach the previously defined hints locations with its end-effector.
-- There are two possible heights for the hints and they are: 1.25 and 0.75. Two arm poses, `low` and `high`, are defined to reach these two heights using Moveit. 
+- There are two possible heights for the hints and they are: 0.75 and 1.25. Two arm poses, `low` and `high`, are defined to reach these two heights using Moveit. 
 - The robot aligns itself to be facing the wall depending on its location. This is done to facilitate reaching the `low` and `high` hints points with the robot's arm.
 - The robot has to go regularly to the center point to check if it has collected a correct hypothesis or not. If not, the robot starts a new round of collecting hints.
 - The robot doesn't go to the center point unless it has collected at least 3 hints (from the beginning of this round) whether these hints are valid or not.
