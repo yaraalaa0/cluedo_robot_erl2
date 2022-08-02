@@ -285,19 +285,22 @@ The received hints are displayed on the first terminal. The plan success result 
 - When collecting hints, the robot doesn't stand exactly at the previously defined locations. However, it stands at the locations: (2.4,0), (0,2.4), (-2.4,0), (0,-2.4) respectively. This is to give space to the robot's arm to reach the previously defined hints locations with its end-effector.
 - There are two possible heights for the hints and they are: 0.75 and 1.25. Two arm poses, `low` and `high`, are defined to reach these two heights using Moveit. 
 - The robot aligns itself to be facing the wall depending on its location. This is done to facilitate reaching the `low` and `high` hints points with the robot's arm.
-- The robot has to go regularly to the center point to check if it has collected a correct hypothesis or not. If not, the robot starts a new round of collecting hints.
+- The `adjust_init_height` action is necessary because at the beginning of the simulation the robot's arm gets initialized to a random pose (It is a strange behaviour since the initial pose was already defined in moveit to be the `low` pose).
+- The robot has to go regularly to the center point to check if it has collected a correct hypothesis or not. If it hasn't collected a correct hypothesis yet, the robot starts a new round of exploring waypoints and collecting hints.
 - The robot doesn't go to the center point unless it has collected at least 3 hints (from the beginning of this round) whether these hints are valid or not.
+- When checking the correctness of the collected hypotheses, the robot checks all the collected `complete` hypotheses, whether they are consistent or not.
 - The action `get_hint` fails only when the robot doesn't receive any hint (`cluedo_link` is not within a hint area). Receiving a non-valid hint doesn't cause the action to fail. However, it doesn't add this non-valid hint to the ontology.
-- When the action `get_hint` fails, the plan execution fails and the task manager updates the knowledge base of ROSPlan with the current state (in this case, the number of collected hints and the explored waypoints are kept unchanged) and send a re-planning request to ROSPlan.
-
+- When the action `get_hint` fails, the plan execution fails and the task manager updates the knowledge base of ROSPlan with the current state (in this case, the number of collected hints and the explored waypoints from the beginning of the round are kept unchanged) and send a re-planning request to ROSPlan.
+- When the action `check_hyp_correct` fails, the plan execution fails and the task manager updates the knowledge base of ROSPlan with the initial state of the system where all waypoints are unexplored and the number of collected hints is 0. Then, the task manager sends a re-planning request to ROSPlan.
+- The robot keeps going to waypoints, getting hints, and checking hypotheses until the plan is successful. This happens only when the action `check_hyp_correct` returns true.
 
 
 ## System's Limitations:
-- 
+- The robot is constrained to the five defined waypoints: `wp0`: (0,0), `wp1`: (3,0), `wp2`: (0,3), `wp3`: (-3,0), `wp4`: (0,-3). Changing the hints waypoints or adding new ones may cause the system to fail.
+- The robot is constrained to the two defined heights: `h1`: 0.75 and `h2`: 1.25. Changing the hints heights will cause the system to fail.
+- The system was tested successfully on the provided simulation environment. Changing the environment by, for example, changing the walls configuration may cause the system to fail.
 
 ## Possible Improvements:
-- Allow a hypothesis not to necessarily contain all three types of hints. It can contain only one or two types. It can be inconsistent.
-- Implement a robot model and a game environment to make it more entertaining
-- Implement a real motion controller for the robot instead of the simple waiting function.
+- Implement a real simulation environment for the game where the robot has to go around the rooms and infer the hints by analyzing, for example, images coming from camera sensors. 
 - Implement a computer vision module that can infers the hint by analyzing images of the room coming from the camera sensor.
-- For checking the correctness of the hypothesis, the robot should send the whole hypothesis elements instead of the hypothesis ID. Based on the hypothesis elements (hints), the oracle should decide if it is correct or not. 
+- Allow the hints waypoints and heights to be undefined to the robot and the robot has to develop a strategy to explore different locations and heights to collect hints. This is to make the situation more realistic. 
