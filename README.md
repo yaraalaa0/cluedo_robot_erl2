@@ -128,7 +128,7 @@ Download this repository to your workspace. Then, build it
 catkin_make
 ```
 
-Place `cluedo_ontology.owl` file on your desktop (or on any other place, but you need to specify the path inside [ontology_server.py](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2/scripts/ontology_server.py)
+Place `cluedo_ontology.owl` file on your desktop (or on any other place, but you need to specify the path inside [ontology_server.py](https://github.com/yaraalaa0/cluedo_robot_erl2/blob/main/erl2/scripts/ontology_server.py))
 
 To launch the program, run the following commands in order on four terminal tabs:
 - launch ROSplan with the action interfaces: 
